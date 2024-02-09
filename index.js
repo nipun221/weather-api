@@ -15,12 +15,11 @@ app.get('/', (req, res) => {
   res.send('Hello! This is Weather API');
 });
 
-app.get('/:city', (req, res) => {
-  const city = req.params.city;
-  axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`)
-    .then(response => {
-      const temperature = response.data.main.temp;
-      res.json({ temperature: `${temperature}°C` });
+app.get('/city/:city', (req, res) => {
+  const { city } = req.params;
+  getWeather(city)
+    .then(weather => {
+      res.json({ weather });
     })
     .catch(error => {
       console.error('Error:', error.message);
