@@ -128,6 +128,3 @@ API_KEY=your_openweathermap_api_key
 
 5. Access the API at `http://localhost:5000`.
 
-## Snapshot
-![Screenshot (63)](https://github.com/nipun221/weather-api/assets/98182168/640ec5bc-6276-45f0-a54f-aa348efad5b7)
-
