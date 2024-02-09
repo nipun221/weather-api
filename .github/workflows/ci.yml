@@ -16,9 +16,10 @@ jobs:
       env: 
          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-         API_KEY: ${{ secrets.API_KEY }}
       run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
     - name: Build the Docker image
+      env:
+        API_KEY: ${{ secrets.API_KEY }}
       run: docker build --build-arg api_key=$API_KEY -t weather-app .
     - name: Tag the Docker image
       run: docker tag weather-app nipun2221/weather-app:latest
