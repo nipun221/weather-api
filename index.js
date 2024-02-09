@@ -12,7 +12,20 @@ app.use(cors());
 const apiKey = process.env.API_KEY;
 
 app.get('/', (req, res) => {
-  res.send('Weather API');
+  res.send('Hello! This is Weather API');
+});
+
+app.get('/:city', (req, res) => {
+  const city = req.params.city;
+  axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`)
+    .then(response => {
+      const temperature = response.data.main.temp;
+      res.json({ temperature: `${temperature}°C` });
+    })
+    .catch(error => {
+      console.error('Error:', error.message);
+      res.status(500).json({ error: 'Internal Server Error' });
+    });
 });
 
 app.post('/getWeather', async (req, res) => {
