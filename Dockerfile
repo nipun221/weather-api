@@ -1,4 +1,4 @@
-FROM node:20-alpine
+FROM node:16
 
 WORKDIR /app
 
@@ -8,9 +8,9 @@ RUN npm install
 
 COPY . .
 
-ARG api-key
+ARG api_key
 ENV PORT=5000
-ENV API_KEY=${api-key}
+ENV API_KEY=${api_key}
 
 EXPOSE 5000
 
