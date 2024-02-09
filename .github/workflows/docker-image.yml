@@ -21,10 +21,7 @@ jobs:
          API_KEY: ${{ secrets.API_KEY }}
       run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
     - name: Build the Docker image
-      run: | 
-        docker build --build-arg api_key=$API_KEY -t weather-app:latest .
-        docker images
+      run: docker build --build-arg api_key=$API_KEY -t weather-app .
+
     - name: Push to dockerhub
-      run: | 
-        docker push nipun2221/weather-app:latest
-        docker images
+      run: docker push nipun2221/weather-app:latest
