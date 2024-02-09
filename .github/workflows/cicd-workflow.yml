@@ -6,29 +6,24 @@ on:
 
 jobs:
     build:
-        setps:
+        runs-on: ubuntu-latest
+        steps:
             - name: Checkout source
               uses: actions/checkout@v3
             - name: Login to DockerHub
-               run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+              run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
             - name: Build the Docker image
-               run: docker build -t nipun2221/weather-api .
+              run: docker build --build-arg api-key=${{ secrets.WEATHER_API_KEY }} -t nipun2221/weather-api .
             - name: Push the Docker image
-               run: docker push nipun2221/weather-api:latest
+              run: docker push nipun2221/weather-api:latest
 
     deploy:
-        runs-on: ubuntu-latest
+        runs-on: [aws-ec2]
         needs: build
         steps:
-            - name: Install AWS CLI
-              run: sudo apt-get install awscli
-            - name: Configure AWS credentials
-              run: aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-            - name: Configure AWS credentials
-              run: aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            - name: Deploy to EC2
-              run: aws s3 cp s3://cicd-weather-api/weather-api.zip .
-            - name: Unzip the file
-              run: unzip weather-api.zip
-            - name: Run the Docker container
-              run: docker run -d -p 80:80 nipun2221/weather-api:latest
+            - name: Pull image from docker hub
+              run: docker pull nipun2221/weather-api:latest
+            - name: Delete old container
+              run: docker rm -f weather-api-container
+            - name: Run docker container
+              run: docker run -d -p 5000:5000 --name weather-api-container nipun2221/weather-api
