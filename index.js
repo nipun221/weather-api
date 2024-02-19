@@ -12,8 +12,7 @@ app.use(cors());
 const apiKey = process.env.API_KEY;
 
 app.get('/', (req, res) => {
-  res.send('Hello! This is Weather API! You can use /city/:city to get the weather of a city.');
-  res.send('Hello! This is Weather API! You can use /getWeather to get the weather of multiple cities.');
+  res.send('Hello! This is Weather API! This is made bye Nipun!');
 });
 
 app.get('/city/:city', (req, res) => {
