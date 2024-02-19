@@ -12,7 +12,7 @@ app.use(cors());
 const apiKey = process.env.API_KEY;
 
 app.get('/', (req, res) => {
-  res.send('Hello! This is Weather API');
+  res.send('Hello! This is Weather API! This is made by Nipun!');
 });
 
 app.get('/city/:city', (req, res) => {
