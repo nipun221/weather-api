@@ -25,7 +25,3 @@ jobs:
       run: docker tag weather-app nipun2221/weather-app:latest
     - name: Push to dockerhub
       run: docker push nipun2221/weather-app:latest
-      
-      #new addition
-    - name: Apply Kubernetes manifests
-      run: kubectl apply -f kubernetes/deployment.yaml -f kubernetes/service.yaml
