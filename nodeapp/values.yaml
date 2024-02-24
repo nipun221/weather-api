@@ -28,7 +28,7 @@ podAnnotations: {}
 podLabels: {}
 
 env:
-  APP_VERSION: 196619d67587126a80bd7b32b7ec8635eb7b7fcd
+  APP_VERSION: ee5255c8e9d11dd944fdd20158265d0455b18371
 podSecurityContext: {}
   # fsGroup: 2000
 
