@@ -1,0 +1,41 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+env:
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+  API_KEY: ${{ secrets.API_KEY }}
+
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login dockerhub
+        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
+      - name: Build Docker image
+        run: docker build --build-arg api_key=$API_KEY -t weather-app .
+
+      - name: Tag the Docker image
+        run: docker tag weather-app nipun2221/weather-app:${{ github.sha }}
+
+      - name: Push Docker image
+        run: docker push nipun2221/weather-app:${{ github.sha }}
+
+      - name: Update values.yaml
+        run: |
+          cd helm
+          sed -i 's|APP_VERSION:.*|APP_VERSION: '${{ github.sha }}'|' values.yaml 
+          git config --global user.name 'nipun221'
+          git config --global user.email 'nipunvats5@gmail.com'
+          git add values.yaml
+          git commit -m "Update values.yaml"
+          git push
