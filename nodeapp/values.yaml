@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: nipun221/weather-api
+  repository: nipun2221/weather-app
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
 imagePullSecrets: []
