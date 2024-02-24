@@ -22,7 +22,7 @@ jobs:
         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
       - name: Build Docker image
-        run: docker build --build-arg api_key=$API_KEY -t weather-app .
+        run: docker build --build-arg api_key=${{ secrets.API_KEY }} -t weather-app .
 
       - name: Tag the Docker image
         run: docker tag weather-app nipun2221/weather-app:${{ github.sha }}
